@@ -21,3 +21,4 @@ node serve.js
 Then visit:
 - **Invitation**: [http://localhost:3000](http://localhost:3000)
 - **Admin Dashboard**: [http://localhost:3000/admin.html](http://localhost:3000/admin.html)
+
