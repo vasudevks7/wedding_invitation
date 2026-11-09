@@ -5,20 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f5efe4">
-  <title>Private Admin | Wedding Feedback</title>
+  <title>Private Admin | Wedding RSVPs &amp; Feedback</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap');
 
     :root {
       --paper: #f5efe4;
+      --paper-card: #fffaf3;
       --ink: #59412f;
       --muted: #8a7058;
       --gold: #b18b57;
-      --line: rgba(111, 81, 53, .35)
+      --green: #486847;
+      --line: rgba(111, 81, 53, .35);
     }
 
     * {
-      box-sizing: border-box
+      box-sizing: border-box;
     }
 
     body {
@@ -27,36 +29,43 @@
       background: radial-gradient(ellipse at 50% 25%, #fffaf1, transparent 60%), linear-gradient(135deg, #f8f3ea, #eee4d5);
       color: var(--ink);
       font-family: "Cormorant Garamond", Georgia, serif;
-      padding: 30px 16px
+      padding: 30px 16px;
     }
 
     main {
-      width: min(760px, 100%);
-      margin: 4vh auto;
+      width: min(820px, 100%);
+      margin: 3vh auto;
       background: rgba(250, 246, 238, .85);
       border: 1px solid var(--line);
       outline: 1px solid rgba(142, 107, 70, .16);
       outline-offset: 6px;
-      padding: clamp(24px, 6vw, 52px)
+      padding: clamp(24px, 6vw, 48px);
     }
 
     header {
       text-align: center;
-      margin-bottom: 24px
+      margin-bottom: 26px;
     }
 
-    .back-link {
-      display: inline-block;
-      margin-bottom: 14px;
-      color: var(--muted);
-      text-decoration: underline;
-      text-underline-offset: 4px;
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 16px;
       font-size: 13px;
-      letter-spacing: .08em
+      letter-spacing: .12em;
+      text-transform: uppercase;
     }
 
-    .back-link:hover {
-      color: var(--ink)
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+      text-decoration: underline;
     }
 
     .kicker {
@@ -64,55 +73,53 @@
       letter-spacing: .25em;
       color: var(--muted);
       font-size: 12px;
-      margin: 4px 0
+      margin: 0 0 6px;
     }
 
     h1 {
       font-weight: 500;
       font-size: clamp(30px, 7vw, 44px);
-      margin: 10px 0
+      margin: 6px 0;
     }
 
     .subtitle {
       color: var(--muted);
       font-size: 18px;
-      margin-top: 4px
+      margin: 0 0 20px;
     }
 
     form {
       display: grid;
       gap: 14px;
       max-width: 420px;
-      margin: 25px auto
+      margin: 25px auto;
     }
 
     label {
       font-size: 15px;
       color: var(--muted);
-      display: block
+      text-align: left;
     }
 
     input {
-      display: block;
       width: 100%;
       padding: 13px;
       border: 1px solid var(--line);
-      background: #fffaf3;
+      background: var(--paper-card);
       color: var(--ink);
       font: 16px inherit;
       margin-top: 6px;
-      transition: border-color .2s, box-shadow .2s
     }
 
     input:focus {
       outline: none;
       border-color: var(--gold);
-      box-shadow: 0 0 0 2px rgba(177, 139, 87, .2)
     }
 
     button {
       font: inherit;
-      cursor: pointer
+      cursor: pointer;
+      transition: background .2s, color .2s, opacity .2s;
     }
 
     .primary {
@@ -123,18 +130,61 @@
       letter-spacing: .14em;
       text-transform: uppercase;
       font-size: 12px;
-      transition: .25s ease
     }
 
     .primary:hover {
       background: transparent;
-      color: var(--ink)
+      color: var(--ink);
+    }
+
+    .secondary-btn {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      padding: 8px 14px;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .secondary-btn:hover {
+      background: rgba(111, 81, 53, .08);
     }
 
     .status {
       text-align: center;
       color: var(--muted);
-      min-height: 22px
+      min-height: 22px;
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin: 24px 0;
+      text-align: center;
+    }
+
+    .stat-card {
+      border: 1px solid var(--line);
+      background: var(--paper-card);
+      padding: 14px 8px;
+    }
+
+    .stat-num {
+      font-size: 26px;
+      font-weight: 600;
+      display: block;
+      color: var(--ink);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
     }
 
     .toolbar {
@@ -143,67 +193,153 @@
       align-items: center;
       gap: 12px;
       flex-wrap: wrap;
-      margin: 28px 0 18px;
+      margin: 20px 0 16px;
       border-top: 1px solid var(--line);
-      padding-top: 20px
+      padding-top: 16px;
+    }
+
+    .action-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .feedback-list {
       display: grid;
-      gap: 12px
+      gap: 14px;
     }
 
     .feedback-item {
       border: 1px solid var(--line);
-      padding: 16px;
-      background: #fffaf3;
-      overflow-wrap: anywhere
+      padding: 18px;
+      background: var(--paper-card);
+      overflow-wrap: anywhere;
+      position: relative;
     }
 
     .item-head {
       display: flex;
       justify-content: space-between;
       gap: 12px;
-      align-items: start
+      align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(111, 81, 53, .12);
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .guest-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      border-radius: 2px;
+    }
+
+    .badge-yes {
+      background: rgba(72, 104, 71, .14);
+      color: var(--green);
+      border: 1px solid rgba(72, 104, 71, .3);
+    }
+
+    .badge-no {
+      background: rgba(142, 67, 55, .1);
+      color: #8e4337;
+      border: 1px solid rgba(142, 67, 55, .25);
     }
 
     .feedback-item p {
       white-space: pre-wrap;
-      line-height: 1.45;
-      margin: 12px 0
+      line-height: 1.5;
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    .stars-text {
+      color: var(--gold);
+      font-size: 15px;
+      letter-spacing: 2px;
+    }
+
+    .item-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+      padding-top: 8px;
+      font-size: 13px;
+      color: var(--muted);
     }
 
     .delete {
       border: 1px solid #a55b4d;
       color: #8e4337;
       background: transparent;
-      padding: 7px 12px;
-      font-size: 13px;
-      margin-top: 10px;
-      transition: .2s ease
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
     }
 
     .delete:hover {
-      background: #a55b4d;
-      color: #fff
+      background: #8e4337;
+      color: #fff;
+    }
+
+    .source-tag {
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: .8;
+    }
+
+    details.sql-guide {
+      margin-top: 32px;
+      border: 1px dashed var(--line);
+      padding: 14px;
+      background: rgba(255, 255, 255, .5);
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    details.sql-guide summary {
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    details.sql-guide pre {
+      background: #f1ebd9;
+      padding: 10px;
+      overflow-x: auto;
+      font-size: 12px;
+      margin-top: 8px;
+      border: 1px solid rgba(111, 81, 53, .2);
     }
 
     [hidden] {
-      display: none !important
+      display: none !important;
     }
 
     @media(max-width:520px) {
       body {
-        padding: 20px 14px
+        padding: 16px 10px;
       }
 
       main {
         margin: 2vh auto;
-        padding: 24px 18px
+        padding: 20px 14px;
       }
 
-      .item-head {
-        display: block
+      .stats-bar {
+        grid-template-columns: 1fr 1fr;
       }
     }
   </style>
@@ -212,18 +348,22 @@
 <body>
   <main>
     <header>
-      <a href="index.html" class="back-link">← Back to Wedding Invitation</a>
+      <nav class="nav-links" aria-label="Page navigation">
+        <a href="invite.html">← View Invitation</a>
+        <span>·</span>
+        <a href="index.html">Home Hub</a>
+      </nav>
       <p class="kicker">Fahad &amp; Nesrin · Private Area</p>
-      <h1>Feedback Dashboard</h1>
-      <p class="subtitle">Administrator sign-in required</p>
+      <h1>Guest RSVP &amp; Feedback</h1>
+      <p class="subtitle">Administrator sign-in</p>
     </header>
 
     <form id="loginForm">
-      <label>Admin email
-        <input id="email" type="email" autocomplete="username" required placeholder="Admin email">
+      <label>Admin email (optional)
+        <input id="email" type="email" autocomplete="username" placeholder="admin@example.com">
       </label>
       <label>Password
-        <input id="password" type="password" autocomplete="current-password" required placeholder="Your password">
+        <input id="password" type="password" autocomplete="current-password" required placeholder="Enter password (e.g. fahadnesrin2026)">
       </label>
       <button class="primary" id="loginButton" type="submit">Sign in</button>
       <div class="status" id="loginStatus" role="status" aria-live="polite"></div>
@@ -231,12 +371,61 @@
 
     <section id="dashboard" hidden>
       <div class="toolbar">
-        <strong id="total">Feedback received: 0</strong>
+        <div class="action-group">
+          <button class="secondary-btn" id="refreshButton" type="button">↻ Refresh</button>
+          <button class="secondary-btn" id="exportButton" type="button">⬇ Export CSV</button>
+        </div>
         <button class="primary" id="logoutButton" type="button">Log out</button>
       </div>
-      <div class="feedback-list" id="feedbackList"></div>
+
+      <div class="stats-bar">
+        <div class="stat-card">
+          <span class="stat-num" id="statTotal">0</span>
+          <span class="stat-label">Total Responses</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" id="statAttending" style="color: var(--green);">0</span>
+          <span class="stat-label">Attending</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" id="statDeclined" style="color: #8e4337;">0</span>
+          <span class="stat-label">Not Attending</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" id="statRating" style="color: var(--gold);">—</span>
+          <span class="stat-label">Avg Rating</span>
+        </div>
+      </div>
+
+      <h2>Attendance Responses &amp; Wishes</h2>
+      <div class="feedback-list" id="rsvpList"></div>
+
+      <details class="sql-guide">
+        <summary>⚙️ Supabase Cloud Sync Setup (Optional SQL)</summary>
+        <p>If you want real-time syncing across separate devices without permission barriers, run this once in your Supabase SQL Editor:</p>
+        <pre><code>-- 1. Create table if it doesn't already exist
+CREATE TABLE IF NOT EXISTS public.wedding_rsvps (
+    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    guest_name TEXT NOT NULL,
+    attending BOOLEAN DEFAULT TRUE,
+    message TEXT,
+    rating INTEGER
+);
+
+-- 2. Enable Row Level Security &amp; allow guest submissions and admin viewing
+ALTER TABLE public.wedding_rsvps ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Allow public insert" ON public.wedding_rsvps;
+DROP POLICY IF EXISTS "Allow public select" ON public.wedding_rsvps;
+DROP POLICY IF EXISTS "Allow public delete" ON public.wedding_rsvps;
+
+CREATE POLICY "Allow public insert" ON public.wedding_rsvps FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public select" ON public.wedding_rsvps FOR SELECT USING (true);
+CREATE POLICY "Allow public delete" ON public.wedding_rsvps FOR DELETE USING (true);</code></pre>
+      </details>
     </section>
   </main>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const SUPABASE_URL = "https://ihjrdmnnkbsfgotlayzh.supabase.co";
@@ -248,133 +437,325 @@
         db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       }
     } catch (e) {
-      console.warn("Supabase initialization notice:", e);
+      console.warn("Supabase initialization error:", e);
     }
 
     const loginForm = document.getElementById("loginForm");
     const loginStatus = document.getElementById("loginStatus");
     const dashboard = document.getElementById("dashboard");
-    const feedbackList = document.getElementById("feedbackList");
+    const rsvpList = document.getElementById("rsvpList");
+    const pageSubtitle = document.querySelector(".subtitle");
+    let currentRsvps = [];
+
+    function setAdminState(isLoggedIn) {
+      if (isLoggedIn) {
+        loginForm.hidden = true;
+        dashboard.hidden = false;
+        if (pageSubtitle) pageSubtitle.textContent = "Response & Attendance Overview";
+        loadRsvps();
+      } else {
+        dashboard.hidden = true;
+        loginForm.hidden = false;
+        if (pageSubtitle) pageSubtitle.textContent = "Administrator sign-in";
+      }
+    }
+
+    // Check existing session
+    if (sessionStorage.getItem("admin_logged_in") === "true") {
+      setAdminState(true);
+    }
 
     loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      loginStatus.textContent = "Signing in...";
+      loginStatus.textContent = "Checking credentials...";
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
       let authenticated = false;
-      if (db) {
+
+      // 1. Try Supabase Auth if email and password provided
+      if (db && email) {
         try {
           const { data, error } = await db.auth.signInWithPassword({ email, password });
           if (!error && data?.session) {
             authenticated = true;
           }
         } catch (e) {
-          console.warn("Supabase auth notice:", e);
+          console.warn("Supabase auth attempt:", e);
         }
       }
 
-      // Local fallback for offline/local testing
-      if (!authenticated && password.length >= 4) {
+      // 2. Master / local passcode fallback
+      if (!authenticated && (password === "fahadnesrin2026" || password === "admin")) {
         authenticated = true;
       }
 
       if (!authenticated) {
-        loginStatus.textContent = "Sign-in failed. Please check your credentials.";
+        loginStatus.textContent = "Sign-in failed. Please check your password.";
         return;
       }
 
+      sessionStorage.setItem("admin_logged_in", "true");
       loginStatus.textContent = "";
-      loginForm.hidden = true;
-      dashboard.hidden = false;
-      await loadFeedback();
+      setAdminState(true);
     });
 
-    async function loadFeedback() {
-      feedbackList.replaceChildren();
-      let items = [];
+    async function loadRsvps() {
+      rsvpList.replaceChildren();
+      const loadingP = document.createElement("p");
+      loadingP.textContent = "Loading responses...";
+      loadingP.style.color = "var(--muted)";
+      rsvpList.appendChild(loadingP);
 
-      // Load from Supabase if connected
+      let items = [];
+      const deletedIds = new Set(JSON.parse(sessionStorage.getItem("wedding_rsvps_deleted") || "[]"));
+
+      // 1. Fetch from Supabase wedding_rsvps table
       if (db) {
         try {
-          const { data, error } = await db.from("wedding_feedback")
-            .select("id, guest_name, rating, message, created_at")
+          const { data, error } = await db.from("wedding_rsvps")
+            .select("id, guest_name, attending, message, rating, created_at")
             .order("created_at", { ascending: false });
           if (!error && Array.isArray(data)) {
-            items = data;
+            data.forEach(item => {
+              if (!deletedIds.has(String(item.id))) {
+                items.push({ ...item, _source: 'cloud' });
+              }
+            });
+          } else if (error) {
+            // Check legacy feedback table if wedding_rsvps is not yet created
+            const legacy = await db.from("wedding_feedback")
+              .select("id, guest_name, rating, message, created_at")
+              .order("created_at", { ascending: false });
+            if (!legacy.error && Array.isArray(legacy.data)) {
+              legacy.data.forEach(item => {
+                if (!deletedIds.has(String(item.id))) {
+                  items.push({ ...item, attending: true, _source: 'cloud' });
+                }
+              });
+            }
           }
         } catch (e) {
-          console.warn("Supabase load notice:", e);
+          console.warn("Supabase fetch notice:", e);
         }
       }
 
-      // Load local feedback backup
+      // Helper function to prevent duplicate items between local and cloud
+      function isDuplicate(target, list) {
+        return list.some(existing => {
+          if (String(existing.id) === String(target.id)) return true;
+          if (target._cloud_id && String(existing.id) === String(target._cloud_id)) return true;
+          if (existing._cloud_id && String(existing._cloud_id) === String(target.id)) return true;
+          const sameName = (existing.guest_name || "").trim().toLowerCase() === (target.guest_name || "").trim().toLowerCase();
+          const sameMsg = (existing.message || "").trim() === (target.message || "").trim();
+          const sameAttending = (existing.attending !== false) === (target.attending !== false);
+          if (sameName && sameMsg && sameAttending) {
+            const timeDiff = Math.abs(new Date(existing.created_at || 0) - new Date(target.created_at || 0));
+            if (isNaN(timeDiff) || timeDiff < 60000) return true;
+          }
+          return false;
+        });
+      }
+
+      // 2. Load from localStorage (wedding_rsvps_local)
       try {
-        const local = JSON.parse(localStorage.getItem("wedding_feedback_local") || "[]");
+        const local = JSON.parse(localStorage.getItem("wedding_rsvps_local") || "[]");
         if (Array.isArray(local) && local.length) {
-          const existingIds = new Set(items.map(x => String(x.id)));
           local.forEach(l => {
-            if (!existingIds.has(String(l.id))) {
-              items.push(l);
+            if (!deletedIds.has(String(l.id)) && !isDuplicate(l, items)) {
+              items.push({ ...l, _local_id: l.id, _source: 'local' });
+            }
+          });
+        }
+      } catch (e) {
+        console.warn("LocalStorage load notice:", e);
+      }
+
+      // 3. Backwards-compatible load from wedding_feedback_local
+      try {
+        const legacy = JSON.parse(localStorage.getItem("wedding_feedback_local") || "[]");
+        if (Array.isArray(legacy) && legacy.length) {
+          legacy.forEach(l => {
+            const normalized = {
+              id: l.id,
+              _local_id: l.id,
+              guest_name: l.guest_name,
+              attending: true,
+              message: l.message,
+              rating: l.rating,
+              created_at: l.created_at,
+              _source: 'local'
+            };
+            if (!deletedIds.has(String(l.id)) && !isDuplicate(normalized, items)) {
+              items.push(normalized);
             }
           });
         }
       } catch (e) {}
 
-      document.getElementById("total").textContent = "Feedback received: " + items.length;
+      // Sort by creation date descending
+      items.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+      currentRsvps = items;
+
+      // Update statistics safely casting numeric strings
+      const total = items.length;
+      const yesCount = items.filter(item => item.attending !== false).length;
+      const noCount = items.filter(item => item.attending === false).length;
+      const ratedItems = items.filter(item => item.rating !== null && item.rating !== undefined && !isNaN(Number(item.rating)) && Number(item.rating) > 0);
+      const avgRating = ratedItems.length > 0 
+        ? (ratedItems.reduce((acc, cur) => acc + Number(cur.rating), 0) / ratedItems.length).toFixed(1) + " ★"
+        : "—";
+
+      document.getElementById("statTotal").textContent = total;
+      document.getElementById("statAttending").textContent = yesCount;
+      document.getElementById("statDeclined").textContent = noCount;
+      document.getElementById("statRating").textContent = avgRating;
+
+      rsvpList.replaceChildren();
+
       if (!items.length) {
-        const p = document.createElement("p");
-        p.textContent = "No feedback received yet.";
-        feedbackList.appendChild(p);
+        const emptyP = document.createElement("p");
+        emptyP.textContent = "No attendance responses or feedback received yet.";
+        emptyP.style.color = "var(--muted)";
+        rsvpList.appendChild(emptyP);
         return;
       }
-
-      items.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
 
       items.forEach(item => {
         const card = document.createElement("article");
         card.className = "feedback-item";
+
+        // Card header
         const head = document.createElement("div");
         head.className = "item-head";
-        const name = document.createElement("strong");
+
+        const name = document.createElement("span");
+        name.className = "guest-title";
         name.textContent = item.guest_name || "Guest";
-        const stars = document.createElement("span");
-        const count = Math.max(1, Math.min(5, Number(item.rating) || 5));
-        stars.textContent = "★".repeat(count) + "☆".repeat(5 - count);
-        head.append(name, stars);
-        const message = document.createElement("p");
-        message.textContent = item.message;
-        const date = document.createElement("small");
-        date.textContent = item.created_at ? new Date(item.created_at).toLocaleString() : "";
-        const del = document.createElement("button");
-        del.className = "delete";
-        del.type = "button";
-        del.textContent = "Delete feedback";
-        del.addEventListener("click", async () => {
-          if (!confirm("Delete this feedback permanently?")) return;
+
+        const badge = document.createElement("span");
+        badge.className = "badge " + (item.attending === false ? "badge-no" : "badge-yes");
+        badge.textContent = item.attending === false ? "✕ Not attending" : "✓ Attending";
+
+        head.append(name, badge);
+
+        // Body content
+        const bodyContent = document.createElement("div");
+
+        if (item.rating !== null && item.rating !== undefined && Number(item.rating) > 0) {
+          const stars = document.createElement("div");
+          stars.className = "stars-text";
+          const count = Math.max(1, Math.min(5, Number(item.rating)));
+          stars.textContent = "★".repeat(count) + "☆".repeat(5 - count) + " (" + count + "/5)";
+          bodyContent.appendChild(stars);
+        }
+
+        if (item.message) {
+          const messageP = document.createElement("p");
+          messageP.textContent = item.message;
+          bodyContent.appendChild(messageP);
+        }
+
+        // Footer & delete
+        const footer = document.createElement("div");
+        footer.className = "item-footer";
+
+        const metaSpan = document.createElement("span");
+        const formattedDate = item.created_at ? new Date(item.created_at).toLocaleString() : "Just now";
+        const sourceLabel = item._source === 'local' ? " · Local backup" : " · Cloud synced";
+        metaSpan.textContent = formattedDate + sourceLabel;
+
+        const delBtn = document.createElement("button");
+        delBtn.className = "delete";
+        delBtn.type = "button";
+        delBtn.textContent = "Delete RSVP";
+
+        delBtn.addEventListener("click", async () => {
+          if (!confirm(`Delete response from "${item.guest_name || 'Guest'}" permanently?`)) return;
+
+          // Record as deleted in current session to prevent ghost items
+          deletedIds.add(String(item.id));
+          if (item._local_id) deletedIds.add(String(item._local_id));
+          sessionStorage.setItem("wedding_rsvps_deleted", JSON.stringify([...deletedIds]));
+
+          // Attempt delete on Supabase if not a local-only id
           if (db && !String(item.id).startsWith("local_")) {
             try {
-              await db.from("wedding_feedback").delete().eq("id", item.id);
-            } catch (e) {}
+              const res = await db.from("wedding_rsvps").delete().eq("id", item.id);
+              if (res.error) {
+                await db.from("wedding_feedback").delete().eq("id", item.id);
+              }
+            } catch (err) {
+              console.warn("Supabase delete notice:", err);
+            }
           }
+
+          // Always clean up localStorage thoroughly
           try {
-            const local = JSON.parse(localStorage.getItem("wedding_feedback_local") || "[]");
-            const updated = local.filter(x => String(x.id) !== String(item.id));
-            localStorage.setItem("wedding_feedback_local", JSON.stringify(updated));
+            const localRsvps = JSON.parse(localStorage.getItem("wedding_rsvps_local") || "[]");
+            const updatedRsvps = localRsvps.filter(x => {
+              if (String(x.id) === String(item.id) || String(x.id) === String(item._local_id)) return false;
+              if (x.guest_name === item.guest_name && x.created_at === item.created_at) return false;
+              return true;
+            });
+            localStorage.setItem("wedding_rsvps_local", JSON.stringify(updatedRsvps));
+
+            const localFeedback = JSON.parse(localStorage.getItem("wedding_feedback_local") || "[]");
+            const updatedFeedback = localFeedback.filter(x => {
+              if (String(x.id) === String(item.id) || String(x.id) === String(item._local_id)) return false;
+              if (x.guest_name === item.guest_name && x.created_at === item.created_at) return false;
+              return true;
+            });
+            localStorage.setItem("wedding_feedback_local", JSON.stringify(updatedFeedback));
           } catch (e) {}
-          await loadFeedback();
+
+          await loadRsvps();
         });
-        card.append(head, message, date, document.createElement("br"), del);
-        feedbackList.appendChild(card);
+
+        footer.append(metaSpan, delBtn);
+        card.append(head, bodyContent, footer);
+        rsvpList.appendChild(card);
       });
     }
 
+    // Refresh button
+    document.getElementById("refreshButton").addEventListener("click", () => {
+      loadRsvps();
+    });
+
+    // CSV Export using Blob with UTF-8 BOM
+    document.getElementById("exportButton").addEventListener("click", () => {
+      if (!currentRsvps.length) {
+        alert("No RSVPs to export yet.");
+        return;
+      }
+      const headers = ["Guest Name", "Attending", "Rating", "Wishes / Message", "Date"];
+      const rows = currentRsvps.map(item => [
+        `"${(item.guest_name || 'Guest').replace(/"/g, '""')}"`,
+        item.attending === false ? '"No"' : '"Yes"',
+        item.rating ? `"${item.rating} / 5"` : '"—"',
+        `"${(item.message || '').replace(/"/g, '""')}"`,
+        `"${item.created_at ? new Date(item.created_at).toLocaleString() : ''}"`
+      ]);
+      const csvString = "\uFEFF" + [headers.join(","), ...rows.map(e => e.join(","))].join("\r\n");
+      const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `wedding_rsvps_${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
+
+    // Logout
     document.getElementById("logoutButton").addEventListener("click", async () => {
+      sessionStorage.removeItem("admin_logged_in");
       if (db) {
         try { await db.auth.signOut(); } catch (e) {}
       }
-      dashboard.hidden = true;
-      loginForm.hidden = false;
+      setAdminState(false);
       document.getElementById("password").value = "";
       loginStatus.textContent = "You have signed out.";
     });

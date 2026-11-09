@@ -436,10 +436,11 @@
             }
         }
 
-        .feedback-section {
+
+        .rsvp-section {
             max-width: 560px;
             margin: 42px auto 0;
-            padding-top: 28px;
+            padding: 28px 0 8px;
             border-top: 1px solid var(--line)
         }
 
@@ -450,30 +451,56 @@
             color: var(--muted)
         }
 
-        .feedback-section h3,
-        .admin-panel h3 {
+        .rsvp-section h3 {
             font-weight: 500;
             font-size: 30px;
             margin: 8px 0
         }
 
+        .rsvp-options {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 12px 0 18px
+        }
+
+        .rsvp-choice {
+            min-width: 125px;
+            padding: 13px 24px;
+            border: 1px solid var(--ink);
+            background: transparent;
+            color: var(--ink);
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background .2s, color .2s, transform .2s
+        }
+
+        .rsvp-choice.selected,
+        .rsvp-choice:hover {
+            background: var(--ink);
+            color: #fff8ed
+        }
+
         .feedback-form {
             display: grid;
-            gap: 12px;
+            gap: 14px;
             text-align: left;
             margin-top: 18px
         }
 
         .feedback-form label,
-        .admin-panel label {
+        .field-title {
+            display: block;
             font-size: 14px;
             color: var(--muted);
             letter-spacing: .04em
         }
 
         .feedback-form input,
-        .feedback-form textarea,
-        .admin-panel input {
+        .feedback-form textarea {
             width: 100%;
             padding: 12px 13px;
             border: 1px solid var(--line);
@@ -481,7 +508,13 @@
             color: var(--ink);
             font: 16px "Cormorant Garamond", Georgia, serif;
             border-radius: 2px;
-            margin-top: 5px
+            margin-top: 6px
+        }
+
+        .feedback-form input:focus,
+        .feedback-form textarea:focus {
+            outline: none;
+            border-color: var(--gold)
         }
 
         .feedback-form textarea {
@@ -493,7 +526,7 @@
             display: flex;
             gap: 8px;
             justify-content: center;
-            margin: 4px 0
+            margin: 6px 0
         }
 
         .star {
@@ -502,23 +535,35 @@
             color: #b9a58b;
             font-size: 30px;
             cursor: pointer;
-            padding: 2px
+            padding: 2px;
+            transition: color .2s, transform .15s
         }
 
+        .star:hover,
         .star.selected {
             color: #a77835
         }
 
-        .submit-btn,
-        .admin-btn {
+        .submit-btn {
             border: 1px solid var(--ink);
             background: var(--ink);
             color: #fff8ed;
-            padding: 12px 20px;
-            letter-spacing: .13em;
+            padding: 13px 24px;
+            letter-spacing: .14em;
             text-transform: uppercase;
             font-size: 11px;
-            cursor: pointer
+            cursor: pointer;
+            transition: background .2s, color .2s
+        }
+
+        .submit-btn:hover {
+            background: transparent;
+            color: var(--ink)
+        }
+
+        .submit-btn:disabled {
+            opacity: .6;
+            cursor: not-allowed
         }
 
         .form-status {
@@ -541,22 +586,12 @@
             color: var(--ink);
             font-size: 18px;
             cursor: pointer;
-            box-shadow: 0 4px 18px #49351c18
+            box-shadow: 0 4px 18px #49351c18;
+            transition: transform .2s
         }
 
-        @media(max-width:520px) {
-            .feedback-section {
-                padding-left: 4px;
-                padding-right: 4px
-            }
-
-            .admin-panel {
-                padding: 16px
-            }
-
-            .feedback-item-head {
-                display: block
-            }
+        .music-control:hover {
+            transform: scale(1.05)
         }
 
         @media(max-width:520px) {
@@ -757,37 +792,42 @@
                     target="_blank" rel="noopener">View venue location ↗</a>
 
 
-                <section class="feedback-section" aria-labelledby="feedbackTitle">
-                    <p class="section-kicker">A note for the couple</p>
-                    <h3 id="feedbackTitle">Share Your Wishes</h3>
-                    <p class="address">We would love to hear from you.</p>
-                    <form class="feedback-form" id="feedbackForm">
-                        <label>Your name (optional)
-                            <input id="guestName" maxlength="80" autocomplete="name" placeholder="Your name">
+
+                <section class="rsvp-section" aria-labelledby="rsvpTitle">
+                    <p class="section-kicker">Kindly respond</p>
+                    <h3 id="rsvpTitle">Will You Attend?</h3>
+                    <p class="address">Please let us know if you can join our celebration.</p>
+                    <form class="feedback-form" id="combinedForm">
+                        <label for="guestName">Your name
+                            <input id="guestName" maxlength="80" autocomplete="name" placeholder="Enter your name"
+                                required>
                         </label>
                         <div>
-                            <label style="display:block;text-align:center">Your rating</label>
-                            <div class="rating-row" role="group" aria-label="Choose a rating">
-                                <button class="star selected" type="button" data-rating="1"
-                                    aria-label="1 star">★</button>
-                                <button class="star selected" type="button" data-rating="2"
-                                    aria-label="2 stars">★</button>
-                                <button class="star selected" type="button" data-rating="3"
-                                    aria-label="3 stars">★</button>
-                                <button class="star selected" type="button" data-rating="4"
-                                    aria-label="4 stars">★</button>
-                                <button class="star selected" type="button" data-rating="5"
-                                    aria-label="5 stars">★</button>
+                            <span class="field-title" style="text-align:center">Will you attend?</span>
+                            <div class="rsvp-options" role="group" aria-label="Will you attend?">
+                                <button class="rsvp-choice selected" type="button" data-attending="yes"
+                                    aria-pressed="true">Yes, I will</button>
+                                <button class="rsvp-choice" type="button" data-attending="no"
+                                    aria-pressed="false">Sorry, can't</button>
                             </div>
                         </div>
-                        <label>Your wishes / feedback
-                            <textarea id="guestMessage" required maxlength="1500"
+                        <label for="guestMessage">Feedback or wishes <span>(optional)</span>
+                            <textarea id="guestMessage" maxlength="1500"
                                 placeholder="Write your wishes here..."></textarea>
                         </label>
-                        <button class="submit-btn" id="feedbackSubmit" type="submit">Send privately</button>
-                        <div class="form-status" id="feedbackStatus" role="status" aria-live="polite"></div>
+                        <div>
+                            <span class="field-title" style="text-align:center">Your rating <span>(optional)</span></span>
+                            <div class="rating-row" role="group" aria-label="Choose an optional rating">
+                                <button class="star" type="button" data-rating="1" aria-label="1 star">★</button>
+                                <button class="star" type="button" data-rating="2" aria-label="2 stars">★</button>
+                                <button class="star" type="button" data-rating="3" aria-label="3 stars">★</button>
+                                <button class="star" type="button" data-rating="4" aria-label="4 stars">★</button>
+                                <button class="star" type="button" data-rating="5" aria-label="5 stars">★</button>
+                            </div>
+                        </div>
+                        <button class="submit-btn" id="combinedSubmit" type="submit">Send response</button>
+                        <div class="form-status" id="combinedStatus" role="status" aria-live="polite"></div>
                     </form>
-
                 </section>
 
                 <div class="countdown">
@@ -827,7 +867,17 @@
         const invitation = document.getElementById('invitation');
         const music = document.getElementById('weddingMusic');
         const musicToggle = document.getElementById('musicToggle');
-        let selectedRating = 5;
+
+        // Keep music toggle button indicator synchronized with audio playback state
+        music.addEventListener('play', () => {
+            musicToggle.textContent = '♫';
+            musicToggle.setAttribute('aria-label', 'Pause background music');
+        });
+
+        music.addEventListener('pause', () => {
+            musicToggle.textContent = '♪';
+            musicToggle.setAttribute('aria-label', 'Play background music');
+        });
 
         document.getElementById('openInvite').addEventListener('click', async () => {
             cover.style.display = 'none';
@@ -836,9 +886,8 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
             try {
                 await music.play();
-                musicToggle.textContent = '♫';
             } catch (e) {
-                musicToggle.textContent = '♪';
+                console.warn('Autoplay prevented by browser:', e);
             }
         });
 
@@ -847,7 +896,6 @@
                 music.pause();
                 music.currentTime = 0;
             } catch (e) { }
-            musicToggle.textContent = '♪';
             invitation.classList.remove('show');
             invitation.setAttribute('aria-hidden', 'true');
             cover.style.display = 'flex';
@@ -858,13 +906,11 @@
             if (music.paused) {
                 try {
                     await music.play();
-                    musicToggle.textContent = '♫';
                 } catch (e) {
-                    musicToggle.textContent = '♪';
+                    console.warn('Playback error:', e);
                 }
             } else {
                 music.pause();
-                musicToggle.textContent = '♪';
             }
         });
 
@@ -890,70 +936,107 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // Star rating selection
-        document.querySelectorAll('.star').forEach(btn => {
-            btn.addEventListener('click', () => {
-                selectedRating = Number(btn.dataset.rating) || 5;
-                document.querySelectorAll('.star').forEach(star => {
-                    star.classList.toggle('selected', (Number(star.dataset.rating) || 0) <= selectedRating);
+        let attending = true;
+        let selectedRating = null;
+        document.querySelectorAll('.rsvp-choice').forEach(button => {
+            button.addEventListener('click', () => {
+                attending = button.dataset.attending === 'yes';
+                document.querySelectorAll('.rsvp-choice').forEach(choice => {
+                    const active = choice === button;
+                    choice.classList.toggle('selected', active);
+                    choice.setAttribute('aria-pressed', String(active));
                 });
             });
         });
 
-        // Guest submission
-        const feedbackForm = document.getElementById('feedbackForm');
-        feedbackForm.addEventListener('submit', async (event) => {
+        document.querySelectorAll('.star').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const value = Number(btn.dataset.rating);
+                selectedRating = selectedRating === value ? null : value;
+                document.querySelectorAll('.star').forEach(star => {
+                    const active = selectedRating !== null && Number(star.dataset.rating) <= selectedRating;
+                    star.classList.toggle('selected', active);
+                });
+            });
+        });
+
+        document.getElementById('combinedForm').addEventListener('submit', async (event) => {
             event.preventDefault();
-            const status = document.getElementById('feedbackStatus');
-            const submit = document.getElementById('feedbackSubmit');
+            const status = document.getElementById('combinedStatus');
+            const submit = document.getElementById('combinedSubmit');
             const name = document.getElementById('guestName').value.trim();
             const message = document.getElementById('guestMessage').value.trim();
-
-            if (!message) {
-                status.textContent = 'Please write a message before submitting.';
-                return;
-            }
-
+            if (!name) { status.textContent = 'Please enter your name.'; return; }
             submit.disabled = true;
-            status.textContent = 'Sending...';
+            status.textContent = 'Sending your response...';
 
-            // Always save to localStorage as reliable backup
+            const localId = 'local_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+            const newRsvp = {
+                id: localId,
+                guest_name: name,
+                attending: attending,
+                message: message || null,
+                rating: selectedRating,
+                created_at: new Date().toISOString()
+            };
+
+            // 1. Always save to localStorage immediately so no response is ever lost
             try {
-                const local = JSON.parse(localStorage.getItem('wedding_feedback_local') || '[]');
-                local.unshift({
-                    id: 'local_' + Date.now(),
-                    guest_name: name || null,
-                    rating: selectedRating,
-                    message: message,
-                    created_at: new Date().toISOString()
-                });
-                localStorage.setItem('wedding_feedback_local', JSON.stringify(local));
-            } catch (e) {
-                console.warn('LocalStorage save error:', e);
+                const localList = JSON.parse(localStorage.getItem('wedding_rsvps_local') || '[]');
+                localList.unshift(newRsvp);
+                localStorage.setItem('wedding_rsvps_local', JSON.stringify(localList));
+            } catch (err) {
+                console.warn('LocalStorage save error:', err);
             }
 
+            // 2. Sync to Supabase in parallel with a timeout safeguard
             if (db) {
                 try {
-                    await db.from('wedding_feedback').insert({
-                        guest_name: name || null,
-                        rating: selectedRating,
-                        message: message
-                    });
-                } catch (err) {
-                    console.warn('Supabase insert notice:', err);
+                    const insertPromise = db.from('wedding_rsvps').insert({
+                        guest_name: name,
+                        attending: attending,
+                        message: message || null,
+                        rating: selectedRating
+                    }).select('id');
+
+                    const timeoutPromise = new Promise((_, reject) => 
+                        setTimeout(() => reject(new Error('Sync timeout')), 4000)
+                    );
+
+                    const res = await Promise.race([insertPromise, timeoutPromise]).catch(err => ({ error: err }));
+                    if (res && res.data && res.data[0]?.id) {
+                        try {
+                            const localList = JSON.parse(localStorage.getItem('wedding_rsvps_local') || '[]');
+                            if (localList[0] && localList[0].id === localId) {
+                                localList[0]._cloud_id = res.data[0].id;
+                                localStorage.setItem('wedding_rsvps_local', JSON.stringify(localList));
+                            }
+                        } catch (e) {}
+                    } else if (res && res.error) {
+                        console.warn('Supabase cloud sync notice:', res.error.message || res.error);
+                    }
+                } catch (error) {
+                    console.warn('Supabase submission notice:', error);
                 }
             }
 
+            document.getElementById('combinedForm').reset();
+            attending = true;
+            selectedRating = null;
+            document.querySelectorAll('.rsvp-choice').forEach(choice => {
+                const active = choice.dataset.attending === 'yes';
+                choice.classList.toggle('selected', active);
+                choice.setAttribute('aria-pressed', String(active));
+            });
+            document.querySelectorAll('.star').forEach(star => star.classList.remove('selected'));
+            status.textContent = 'Thank you! Your response has been saved.';
             submit.disabled = false;
-            feedbackForm.reset();
-            selectedRating = 5;
-            document.querySelectorAll('.star').forEach(star => star.classList.add('selected'));
-            status.textContent = 'Thank you! Your feedback was sent privately.';
+
             setTimeout(() => {
-                if (status.textContent === 'Thank you! Your feedback was sent privately.') {
+                if (status.textContent === 'Thank you! Your response has been saved.') {
                     status.textContent = '';
                 }
-            }, 5000);
+            }, 6000);
         });
     </script>
 </body>
