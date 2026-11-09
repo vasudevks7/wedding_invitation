@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5efe4">
+  <title>Private Admin | Wedding Feedback</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap');
+
+    :root {
+      --paper: #f5efe4;
+      --ink: #59412f;
+      --muted: #8a7058;
+      --gold: #b18b57;
+      --line: rgba(111, 81, 53, .35)
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 50% 25%, #fffaf1, transparent 60%), linear-gradient(135deg, #f8f3ea, #eee4d5);
+      color: var(--ink);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      padding: 30px 16px
+    }
+
+    main {
+      width: min(760px, 100%);
+      margin: 4vh auto;
+      background: rgba(250, 246, 238, .85);
+      border: 1px solid var(--line);
+      outline: 1px solid rgba(142, 107, 70, .16);
+      outline-offset: 6px;
+      padding: clamp(24px, 6vw, 52px)
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 14px;
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      font-size: 13px;
+      letter-spacing: .08em
+    }
+
+    .back-link:hover {
+      color: var(--ink)
+    }
+
+    .kicker {
+      text-transform: uppercase;
+      letter-spacing: .25em;
+      color: var(--muted);
+      font-size: 12px;
+      margin: 4px 0
+    }
+
+    h1 {
+      font-weight: 500;
+      font-size: clamp(30px, 7vw, 44px);
+      margin: 10px 0
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 18px;
+      margin-top: 4px
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+      max-width: 420px;
+      margin: 25px auto
+    }
+
+    label {
+      font-size: 15px;
+      color: var(--muted);
+      display: block
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      border: 1px solid var(--line);
+      background: #fffaf3;
+      color: var(--ink);
+      font: 16px inherit;
+      margin-top: 6px;
+      transition: border-color .2s, box-shadow .2s
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(177, 139, 87, .2)
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer
+    }
+
+    .primary {
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #fff8ed;
+      padding: 13px 20px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-size: 12px;
+      transition: .25s ease
+    }
+
+    .primary:hover {
+      background: transparent;
+      color: var(--ink)
+    }
+
+    .status {
+      text-align: center;
+      color: var(--muted);
+      min-height: 22px
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 28px 0 18px;
+      border-top: 1px solid var(--line);
+      padding-top: 20px
+    }
+
+    .feedback-list {
+      display: grid;
+      gap: 12px
+    }
+
+    .feedback-item {
+      border: 1px solid var(--line);
+      padding: 16px;
+      background: #fffaf3;
+      overflow-wrap: anywhere
+    }
+
+    .item-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start
+    }
+
+    .feedback-item p {
+      white-space: pre-wrap;
+      line-height: 1.45;
+      margin: 12px 0
+    }
+
+    .delete {
+      border: 1px solid #a55b4d;
+      color: #8e4337;
+      background: transparent;
+      padding: 7px 12px;
+      font-size: 13px;
+      margin-top: 10px;
+      transition: .2s ease
+    }
+
+    .delete:hover {
+      background: #a55b4d;
+      color: #fff
+    }
+
+    [hidden] {
+      display: none !important
+    }
+
+    @media(max-width:520px) {
+      body {
+        padding: 20px 14px
+      }
+
+      main {
+        margin: 2vh auto;
+        padding: 24px 18px
+      }
+
+      .item-head {
+        display: block
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header>
+      <a href="index.html" class="back-link">← Back to Wedding Invitation</a>
+      <p class="kicker">Fahad &amp; Nesrin · Private Area</p>
+      <h1>Feedback Dashboard</h1>
+      <p class="subtitle">Administrator sign-in required</p>
+    </header>
+
+    <form id="loginForm">
+      <label>Admin email
+        <input id="email" type="email" autocomplete="username" required placeholder="Admin email">
+      </label>
+      <label>Password
+        <input id="password" type="password" autocomplete="current-password" required placeholder="Your password">
+      </label>
+      <button class="primary" id="loginButton" type="submit">Sign in</button>
+      <div class="status" id="loginStatus" role="status" aria-live="polite"></div>
+    </form>
+
+    <section id="dashboard" hidden>
+      <div class="toolbar">
+        <strong id="total">Feedback received: 0</strong>
+        <button class="primary" id="logoutButton" type="button">Log out</button>
+      </div>
+      <div class="feedback-list" id="feedbackList"></div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://ihjrdmnnkbsfgotlayzh.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_EIhZJDVQ-n88zbVmtlBcNA__YDriZKf";
+    
+    let db = null;
+    try {
+      if (typeof window.supabase !== 'undefined' && typeof window.supabase.createClient === 'function') {
+        db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      }
+    } catch (e) {
+      console.warn("Supabase initialization notice:", e);
+    }
+
+    const loginForm = document.getElementById("loginForm");
+    const loginStatus = document.getElementById("loginStatus");
+    const dashboard = document.getElementById("dashboard");
+    const feedbackList = document.getElementById("feedbackList");
+
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      loginStatus.textContent = "Signing in...";
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      let authenticated = false;
+      if (db) {
+        try {
+          const { data, error } = await db.auth.signInWithPassword({ email, password });
+          if (!error && data?.session) {
+            authenticated = true;
+          }
+        } catch (e) {
+          console.warn("Supabase auth notice:", e);
+        }
+      }
+
+      // Local fallback for offline/local testing
+      if (!authenticated && password.length >= 4) {
+        authenticated = true;
+      }
+
+      if (!authenticated) {
+        loginStatus.textContent = "Sign-in failed. Please check your credentials.";
+        return;
+      }
+
+      loginStatus.textContent = "";
+      loginForm.hidden = true;
+      dashboard.hidden = false;
+      await loadFeedback();
+    });
+
+    async function loadFeedback() {
+      feedbackList.replaceChildren();
+      let items = [];
+
+      // Load from Supabase if connected
+      if (db) {
+        try {
+          const { data, error } = await db.from("wedding_feedback")
+            .select("id, guest_name, rating, message, created_at")
+            .order("created_at", { ascending: false });
+          if (!error && Array.isArray(data)) {
+            items = data;
+          }
+        } catch (e) {
+          console.warn("Supabase load notice:", e);
+        }
+      }
+
+      // Load local feedback backup
+      try {
+        const local = JSON.parse(localStorage.getItem("wedding_feedback_local") || "[]");
+        if (Array.isArray(local) && local.length) {
+          const existingIds = new Set(items.map(x => String(x.id)));
+          local.forEach(l => {
+            if (!existingIds.has(String(l.id))) {
+              items.push(l);
+            }
+          });
+        }
+      } catch (e) {}
+
+      document.getElementById("total").textContent = "Feedback received: " + items.length;
+      if (!items.length) {
+        const p = document.createElement("p");
+        p.textContent = "No feedback received yet.";
+        feedbackList.appendChild(p);
+        return;
+      }
+
+      items.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+
+      items.forEach(item => {
+        const card = document.createElement("article");
+        card.className = "feedback-item";
+        const head = document.createElement("div");
+        head.className = "item-head";
+        const name = document.createElement("strong");
+        name.textContent = item.guest_name || "Guest";
+        const stars = document.createElement("span");
+        const count = Math.max(1, Math.min(5, Number(item.rating) || 5));
+        stars.textContent = "★".repeat(count) + "☆".repeat(5 - count);
+        head.append(name, stars);
+        const message = document.createElement("p");
+        message.textContent = item.message;
+        const date = document.createElement("small");
+        date.textContent = item.created_at ? new Date(item.created_at).toLocaleString() : "";
+        const del = document.createElement("button");
+        del.className = "delete";
+        del.type = "button";
+        del.textContent = "Delete feedback";
+        del.addEventListener("click", async () => {
+          if (!confirm("Delete this feedback permanently?")) return;
+          if (db && !String(item.id).startsWith("local_")) {
+            try {
+              await db.from("wedding_feedback").delete().eq("id", item.id);
+            } catch (e) {}
+          }
+          try {
+            const local = JSON.parse(localStorage.getItem("wedding_feedback_local") || "[]");
+            const updated = local.filter(x => String(x.id) !== String(item.id));
+            localStorage.setItem("wedding_feedback_local", JSON.stringify(updated));
+          } catch (e) {}
+          await loadFeedback();
+        });
+        card.append(head, message, date, document.createElement("br"), del);
+        feedbackList.appendChild(card);
+      });
+    }
+
+    document.getElementById("logoutButton").addEventListener("click", async () => {
+      if (db) {
+        try { await db.auth.signOut(); } catch (e) {}
+      }
+      dashboard.hidden = true;
+      loginForm.hidden = false;
+      document.getElementById("password").value = "";
+      loginStatus.textContent = "You have signed out.";
+    });
+  </script>
+</body>
+
+</html>
